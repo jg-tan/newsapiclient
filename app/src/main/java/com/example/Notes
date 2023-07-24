@@ -1,0 +1,70 @@
+1. Start by creating 'Use Cases'
+2. Create Entities and Repositories
+3. Create functions that 'Use Cases' will be using.
+4. Implement Execute functions of 'Use Cases'
+5. Not recommended to use livedata inside repositories since livedata is a lifecycle aware dataholder
+create and emit data in viewmodels and observe them from views.
+    - use Flow
+
+Secret Keys:
+1. Add MY_KEY = "api_key" in gradle.properties
+2. Add buildConfigField("String","API_KEY",MY_KEY) inside defaultConfig in build.gradle
+3. set minify true and shrinkResource true in proguard
+
+Unit Testing Retrofit:
+1. Create a sample response JSON
+2. Implement:
+    private fun enqueueMockResponse(filename: String) {
+        val inputStream = javaClass.classLoader!!.getResourceAsStream(filename)
+        val source = inputStream.source().buffer()
+        val mockResponse = MockResponse()
+        mockResponse.setBody(source.readString(Charsets.UTF_8))
+        server.enqueue(mockResponse)
+    }
+
+Android Hilt:
+1. Create an Application class and add AndroidHiltEntryPoint
+2. Annotate Modules with InstallIn(Component) : Singleton, Activity, etc.
+
+BottomNavigation:
+    private fun setupNavigation() {
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fragContainer_main) as NavHostFragment
+        val navController = navHostFragment.navController
+        binding.apply {
+            bottomNavMain.setupWithNavController(navController)
+        }
+    }
+
+Creating an Adapter/RecyclerView
+1. Start by making layout for the item
+2. Add a RecyclerView to the fragment/Activity
+3. Create Adapter class
+    Adapter(): Adapter<ViewHolder>()
+4. Create ViewHolder
+    inner class ViewHolder(val binding : MyBinding): ViewHolder(binding.root) {
+        fun bind(item: Item) {
+
+        }
+    }
+
+Diff Util
+    private val callback = object : DiffUtil.ItemCallback<Article>() {
+        override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
+            return oldItem.url == newItem.url
+        }
+
+        override fun areContentsTheSame(oldItem: Article, newItem: Article): Boolean {
+            return oldItem == newItem
+        }
+    }
+
+    val differ = AsyncListDiffer(this, callback)
+
+Paging
+1. Current list has to reach last item
+2.
+
+Implementations:
+- OnSwiped
+OnScroll
